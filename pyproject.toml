@@ -12,6 +12,7 @@ dependencies = [
     "mtranslate>=1.8",
     "pyaudio>=0.2.14",
     "pyautogui>=0.9.54",
+    "pyttsx3>=2.98",
     "pywhatkit>=5.4",
     "selenium>=4.33.0",
     "speechrecognition>=3.14.3",

@@ -7,14 +7,15 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import shutil
 
-FIREFOX_BINARY_PATH = "/usr/lib/firefox/firefox"
+FIREFOX_BINARY_PATH = "/usr/lib/firefox/firefox"  
 
 if not shutil.which(FIREFOX_BINARY_PATH):
     raise FileNotFoundError(f"Firefox binary not found at {FIREFOX_BINARY_PATH}")
 
 firefox_options = Options()
 firefox_options.binary_location = FIREFOX_BINARY_PATH
-firefox_options.add_argument("--headless")
+firefox_options.add_argument("--headless") 
+
 firefox_service = Service()
 driver = webdriver.Firefox(service=firefox_service, options=firefox_options)
 
