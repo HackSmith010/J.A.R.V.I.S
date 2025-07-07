@@ -18,4 +18,4 @@ def play_on_youtube(text):
     speak(random.choice(plays) + text)
     ui.press("space")
     
-play_on_youtube("ram siya ram")
+# play_on_youtube("ram siya ram")

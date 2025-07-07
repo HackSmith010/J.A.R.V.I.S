@@ -33,5 +33,5 @@ def youtube_search(query):
     time.sleep(2)
     speak(random.choice(s2))
 
-if __name__ == "__main__":
-    youtube_search("channa mereya")
+# if __name__ == "__main__":
+#     youtube_search("thala for a resean... its bday today")
