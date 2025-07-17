@@ -29,3 +29,23 @@ def battery_alert():
             pass
         
         time.sleep(1500)
+        
+def battery_alert1():
+    time.sleep(10)
+    battery = psutil.sensors_battery()
+    percent = int(battery.percent)
+    
+    if percent < 20:
+        random_low =  random.choice(low_b)
+        speak(random_low)
+    elif percent < 10:
+        random_low = random.choice(low_b)
+        speak(random_low)
+        
+    elif percent < 80:
+        random_full = random.choice(full_battery)
+        speak(random_full)
+    else:
+        speak("Sir, your device is in perfect battery level")
+    
+    time.sleep(1500)
