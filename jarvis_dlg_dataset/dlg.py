@@ -645,13 +645,13 @@ stopdlg = [
 
 open_dld = [
     f"opening...",
-    f"just a second opening",
+    f"just a second opening ",
     f"ok i am gonna open ",
     f"as your wish opening ",
     f"yes sir opening ",
     f"trying to open ",
     f"starting ",
-    f"here we go opening",
+    f"here we go opening ",
 
 ]
 

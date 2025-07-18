@@ -20,4 +20,4 @@ def search_manual(query):
     speak(s12)
     
 time.sleep(2)
-search_manual("Tech with Tim")
+# search_manual("Tech with Tim")

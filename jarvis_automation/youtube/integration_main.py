@@ -97,4 +97,4 @@ def youtube_cmd(query):
     elif query == "focus on search box":
         focus_search_box()
 
-youtube_cmd("carry minati")
+# youtube_cmd("carry minati")

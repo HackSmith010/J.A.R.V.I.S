@@ -14,4 +14,3 @@ def search_google(query):
     pywhatkit.search(query)
     speak(dlg)
     
-search_google("google")
