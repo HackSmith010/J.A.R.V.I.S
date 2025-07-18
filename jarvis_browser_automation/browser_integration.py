@@ -74,6 +74,8 @@ def browser_cmd(query):
     elif query.startswith("search"):
         query = query.replace("search", "").replace("on google", "").strip()
         search_google(query)
+    else:
+        pass
 
-query = "search Arijit Singh "
-browser_cmd(query)
+# query = "search Arijit Singh "
+# browser_cmd(query)

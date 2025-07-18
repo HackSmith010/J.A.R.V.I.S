@@ -248,6 +248,7 @@ dependencies = [
     { name = "pyautogui" },
     { name = "pyttsx3" },
     { name = "pywhatkit" },
+    { name = "requests" },
     { name = "selenium" },
     { name = "speechrecognition" },
 ]
@@ -264,6 +265,7 @@ requires-dist = [
     { name = "pyautogui", specifier = ">=0.9.54" },
     { name = "pyttsx3", specifier = ">=2.98" },
     { name = "pywhatkit", specifier = ">=5.4" },
+    { name = "requests", specifier = ">=2.32.4" },
     { name = "selenium", specifier = ">=4.33.0" },
     { name = "speechrecognition", specifier = ">=3.14.3" },
 ]

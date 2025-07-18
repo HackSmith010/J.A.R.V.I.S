@@ -14,3 +14,5 @@ def battery_cmd(query):
         check_plug_status()
     elif "battery alert" in query:
         battery_alert1()
+    else:
+        pass

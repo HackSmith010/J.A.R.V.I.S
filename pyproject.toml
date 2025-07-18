@@ -15,6 +15,7 @@ dependencies = [
     "pyautogui>=0.9.54",
     "pyttsx3>=2.98",
     "pywhatkit>=5.4",
+    "requests>=2.32.4",
     "selenium>=4.33.0",
     "speechrecognition>=3.14.3",
 ]
