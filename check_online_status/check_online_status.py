@@ -16,7 +16,4 @@ def internet_status():
     if is_online():
         return "Online"
     else:
-        return "Offline"
-
-print(internet_status())
-    
+        return "Offline"    
