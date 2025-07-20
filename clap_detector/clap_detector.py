@@ -99,4 +99,5 @@ def clap_detect():
                 if clap_count == REQUIRED_CLAPS:
                     print("clap detected")
                     break
+                
         
