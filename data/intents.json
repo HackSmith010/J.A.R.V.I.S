@@ -1,0 +1,221 @@
+{
+  "intents": [
+    {
+      "tag": "greeting",
+      "patterns": [
+        "Hi",
+        "Hello",
+        "Hey",
+        "Good morning",
+        "Good afternoon",
+        "Good evening",
+        "What's up?",
+        "How is it going?"
+      ],
+      "responses": [
+        "Hello! How can I assist you today?",
+        "Hi there! What can I do for you?",
+        "Greetings! I am at your service.",
+        "Hello, sir. How may I help?"
+      ]
+    },
+    {
+      "tag": "goodbye",
+      "patterns": [
+        "Bye",
+        "Goodbye",
+        "See you later",
+        "I'm leaving",
+        "Have a good day",
+        "Exit",
+        "Quit",
+        "Turn off"
+      ],
+      "responses": [
+        "Goodbye, sir. Have a great day.",
+        "Farewell. Let me know if you need anything else.",
+        "Shutting down. Goodbye.",
+        "See you later!"
+      ]
+    },
+    {
+      "tag": "thanks",
+      "patterns": [
+        "Thanks",
+        "Thank you",
+        "That's helpful",
+        "I appreciate it",
+        "Thanks a lot"
+      ],
+      "responses": [
+        "You're welcome!",
+        "Anytime, sir.",
+        "My pleasure.",
+        "Glad I could help."
+      ]
+    },
+    {
+      "tag": "identity",
+      "patterns": [
+        "Who are you?",
+        "What are you?",
+        "What is your name?",
+        "Tell me about yourself"
+      ],
+      "responses": [
+        "I am Jarvis, your personal AI assistant.",
+        "I'm Jarvis, a virtual assistant designed to help you with various tasks.",
+        "You can call me Jarvis."
+      ]
+    },
+    {
+      "tag": "creator",
+      "patterns": [
+        "Who made you?",
+        "Who created you?",
+        "Who is your developer?",
+        "Who is your owner?"
+      ],
+      "responses": [
+        "I was created by a skilled programmer.",
+        "I am a creation of a brilliant mind.",
+        "My developer prefers to remain anonymous, but they are clearly a genius."
+      ]
+    },
+    {
+      "tag": "status",
+      "patterns": [
+        "How are you?",
+        "How are you doing?",
+        "Are you okay?"
+      ],
+      "responses": [
+        "I am fully operational and ready for any task.",
+        "I'm functioning at 100% efficiency. How may I help?",
+        "I am fine, thank you for asking."
+      ]
+    },
+    {
+      "tag": "time",
+      "patterns": [
+        "What time is it?",
+        "Tell me the time",
+        "Current time",
+        "What's the time?"
+      ],
+      "responses": [
+        "I am not equipped to provide live time data yet. You can ask me to open a clock application.",
+        "My time-telling module is under development. Please check your system clock for now."
+      ]
+    },
+    {
+      "tag": "date",
+      "patterns": [
+        "What is today's date?",
+        "What's the date?",
+        "Tell me the date"
+      ],
+      "responses": [
+        "I can't provide the live date at the moment, but I'm learning.",
+        "Please check the calendar on your system for the current date."
+      ]
+    },
+    {
+      "tag": "weather",
+      "patterns": [
+        "What's the weather like?",
+        "How is the weather today?",
+        "Tell me the weather forecast"
+      ],
+      "responses": [
+        "I am not connected to a live weather feed. You can check a weather website for the most accurate information.",
+        "My weather sensors are offline. I recommend looking outside or checking a weather app."
+      ]
+    },
+    {
+      "tag": "play_music",
+      "patterns": [
+        "Play music",
+        "Can you play a song?",
+        "I want to listen to music",
+        "Start some music",
+        "Play a track"
+      ],
+      "responses": [
+        "Certainly. Playing a random song from your library.",
+        "Of course. Let's get some music going.",
+        "Right away, sir."
+      ]
+    },
+    {
+      "tag": "open_app",
+      "patterns": [
+        "Open Chrome",
+        "Launch Spotify",
+        "Can you open VS Code?",
+        "Start notepad"
+      ],
+      "responses": [
+        "Opening the application now, sir.",
+        "Certainly. Launching it for you.",
+        "As you wish."
+      ]
+    },
+    {
+      "tag": "joke",
+      "patterns": [
+        "Tell me a joke",
+        "Make me laugh",
+        "Can you tell a joke?",
+        "I want to hear a joke"
+      ],
+      "responses": [
+        "Why don't scientists trust atoms? Because they make up everything!",
+        "What do you call a fake noodle? An Impasta!",
+        "I told my computer I needed a break, and now it won’t stop sending me Kit-Kat ads.",
+        "Why did the scarecrow win an award? Because he was outstanding in his field."
+      ]
+    },
+    {
+      "tag": "fact",
+      "patterns": [
+        "Tell me a fact",
+        "Give me a fun fact",
+        "Interesting fact please"
+      ],
+      "responses": [
+        "A single cloud can weigh more than a million pounds.",
+        "The national animal of Scotland is the unicorn.",
+        "Octopuses have three hearts.",
+        "Bananas are berries, but strawberries aren't."
+      ]
+    },
+    {
+      "tag": "user_bored",
+      "patterns": [
+        "I'm bored",
+        "This is boring",
+        "I have nothing to do",
+        "Suggest something"
+      ],
+      "responses": [
+        "Perhaps you would like to listen to some music or a podcast?",
+        "I can tell you a joke or an interesting fact to pass the time.",
+        "How about learning a new skill? There are many online resources available."
+      ]
+    },
+    {
+      "tag": "user_happy",
+      "patterns": [
+        "I'm happy",
+        "I'm feeling great",
+        "This is awesome"
+      ],
+      "responses": [
+        "I'm glad to hear that, sir!",
+        "Excellent! Is there anything I can do to make your day even better?",
+        "That's wonderful news."
+      ]
+    }
+  ]
+}
