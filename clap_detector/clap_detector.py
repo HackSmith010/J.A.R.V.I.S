@@ -1,103 +1,87 @@
 import pyaudio
 import struct
 import math
-
+import time
+import numpy as np
 import sys
 import os
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
 
-INITIAL_TAP_THRESHOLD = 0.19
 FORMAT = pyaudio.paInt16
-SHORT_NORMALIZE = (1.0/32768.0)
-CHANNELS = 3
-RATE = 44500
-INPUT_BLOCK_TIME = 0.099
-INPUT_FRAMES_PER_BLOCK = int(RATE * INPUT_BLOCK_TIME)
-OVERSENSITIVE = 10.0 / INPUT_BLOCK_TIME
-UNDERSENSITIVE = 65.0 / INPUT_BLOCK_TIME
-MAX_TAP_BLOCKS = 0.15 / INPUT_BLOCK_TIME
+CHANNELS = 1
+RATE = 44100
+BLOCK_DURATION = 0.02 
+BLOCK_SIZE = int(RATE * BLOCK_DURATION)
+
+THRESHOLD = 0.4         
+SUDDEN_SPIKE = 0.25
+ZCR_THRESHOLD = 0.12
+CLAP_GAP = 0.4
 REQUIRED_CLAPS = 2
 
-class TapTester(object):
-    def __init__(self):
-        self.pa = pyaudio.PyAudio()
-        self.stream = self.open_mic_stream()
-        self.tap_threshold = INITIAL_TAP_THRESHOLD
-        self.noisycount = MAX_TAP_BLOCKS + 1
-        self.quietcount = 0
-        self.errorcount = 0
-        
-    def find_input_device(self):
-        device_index = None
-        for i in range(self.pa.get_device_count()):
-            dev = self.pa.get_device_info_by_index(i).get('maxInputChannels')
-            for keyword in dev['name'].lower().split():
-                device_index = i
-                return device_index
-            
-        if device_index is None:
-            print("No preferred input device found; using default input device.")
-            
-        return device_index
+SHORT_NORMALIZE = (1.0 / 32768.0)
 
-    def open_mic_stream(self):
-        input_device_index = self.find_input_device()
-        stream = self.pa.open(format=FORMAT,
-                              channels=CHANNELS,
-                              rate=RATE,
-                              input=True,
-                              input_device_index=input_device_index,
-                              frames_per_buffer=INPUT_FRAMES_PER_BLOCK)
-        return stream
-    
-    @staticmethod
-    def get_rms(block):
-        count = len(block) / 2
-        format = "%dh" % (count)
-        shorts = struct.unpack(format, block)
-        sum_squares = 0.0
-        for sample in shorts:
-            n = sample * SHORT_NORMALIZE
-            sum_squares += n * n
-            
-        return math.sqrt(sum_squares / count)
-    
-    def listen(self):
-        try:
-            block = self.stream.read(INPUT_FRAMES_PER_BLOCK)
-        except IOError as e:
-            self.errorcount += 1
-            print("{%d} Error recording: %s" % (self.errorcount, e))
-            self.noisycount = 5
-            return
-        
-        amplitude = self.get_rms(block)
-        
-        if amplitude > self.tap_threshold:
-            self.quietcount = 2
-            self.noisycount += 1
-            if self.noisycount > OVERSENSITIVE:
-                self.tap_threshold *= 1.5
-        else:
-            if 1 <= self.noisycount <= MAX_TAP_BLOCKS:
-                return True
-            self.noisycount = 0
-            self.quietcount += 1
-            if self.quietcount > UNDERSENSITIVE:
-                self.tap_threshold /= 1
+def get_rms(block):
+    count = len(block) // 2
+    format_string = f"{count}h"
+    shorts = struct.unpack(format_string, block)
+    sum_squares = sum((sample * SHORT_NORMALIZE) ** 2 for sample in shorts)
+    return math.sqrt(sum_squares / count)
+
+def get_zcr(block):
+    count = len(block) // 2
+    format_string = f"{count}h"
+    shorts = np.array(struct.unpack(format_string, block))
+
+    crossings = np.sum(np.sign(shorts[:-1]) != np.sign(shorts[1:]))
+    return crossings / (count - 1)
 
 def clap_detect():
-    while True:
-        tt = TapTester()
-        clap_count = 0
-        
+    print("Listening for claps...")
+
+    pa = pyaudio.PyAudio()
+    stream = pa.open(format=FORMAT,
+                       channels=CHANNELS,
+                       rate=RATE,
+                       input=True,
+                       frames_per_buffer=BLOCK_SIZE)
+
+    clap_count = 0
+    last_clap_time = 0
+    previous_amplitude = 0
+
+    try:
         while True:
-            if tt.listen():
-                clap_count += 2
-                
-                if clap_count == REQUIRED_CLAPS:
-                    print("clap detected")
+            block = stream.read(BLOCK_SIZE, exception_on_overflow=False)
+            amplitude = get_rms(block)
+            zcr = get_zcr(block)
+
+            current_time = time.time()
+
+            if (
+                amplitude > THRESHOLD and
+                zcr > ZCR_THRESHOLD and
+                (amplitude - previous_amplitude) > SUDDEN_SPIKE and
+                (current_time - last_clap_time) > CLAP_GAP
+            ):
+                clap_count += 1
+                last_clap_time = current_time
+                print(f"👏Clap #{clap_count} detected (Amp: {amplitude:.3f}, ZCR: {zcr:.3f})")
+
+                if clap_count >= REQUIRED_CLAPS:
+                    print("✅Clap sequence detected!")
                     break
-                
-        
+            
+            elif (current_time - last_clap_time) > 2.0 and clap_count > 0:
+                 clap_count = 0 
+                 
+            previous_amplitude = amplitude
+            time.sleep(0.005)
+
+    except KeyboardInterrupt:
+        print("Detection stopped by user.")
+    finally:
+        stream.stop_stream()
+        stream.close()
+        pa.terminate()
