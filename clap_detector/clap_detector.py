@@ -38,8 +38,6 @@ def get_zcr(block):
     return crossings / (count - 1)
 
 def clap_detect():
-    print("Listening for claps...")
-
     pa = pyaudio.PyAudio()
     stream = pa.open(format=FORMAT,
                        channels=CHANNELS,
@@ -47,6 +45,7 @@ def clap_detect():
                        input=True,
                        frames_per_buffer=BLOCK_SIZE)
 
+    print("Listening for claps...")
     clap_count = 0
     last_clap_time = 0
     previous_amplitude = 0
@@ -56,7 +55,6 @@ def clap_detect():
             block = stream.read(BLOCK_SIZE, exception_on_overflow=False)
             amplitude = get_rms(block)
             zcr = get_zcr(block)
-
             current_time = time.time()
 
             if (
@@ -67,21 +65,24 @@ def clap_detect():
             ):
                 clap_count += 1
                 last_clap_time = current_time
-                print(f"👏Clap #{clap_count} detected (Amp: {amplitude:.3f}, ZCR: {zcr:.3f})")
+                print(f"👏 Clap #{clap_count} detected (Amp: {amplitude:.3f}, ZCR: {zcr:.3f})")
 
                 if clap_count >= REQUIRED_CLAPS:
-                    print("✅Clap sequence detected!")
-                    break
+                    print("✅ Clap sequence detected!")
+                    return True
             
             elif (current_time - last_clap_time) > 2.0 and clap_count > 0:
+                 print("(Timeout, resetting clap count)")
                  clap_count = 0 
                  
             previous_amplitude = amplitude
             time.sleep(0.005)
 
     except KeyboardInterrupt:
-        print("Detection stopped by user.")
+        print("\nDetection stopped by user.")
+        return False
     finally:
         stream.stop_stream()
         stream.close()
         pa.terminate()
+        print("Audio stream cleaned up.")
