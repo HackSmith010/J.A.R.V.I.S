@@ -42,4 +42,3 @@ else:
                 else:
                     return "I'm sorry, I don't have a response for that."
         return "I'm sorry, I don't understand."
-    

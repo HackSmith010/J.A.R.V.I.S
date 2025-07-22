@@ -45,5 +45,3 @@ def mind(query):
     user_question = query
     answer = get_answer(user_question,vectorizer,x,dataset)
     speak(answer)
-    
-mind("hello")
